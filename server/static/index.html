@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NotificationHub</title>
+<link rel="stylesheet" href="/static/css/style.css">
+<style>
+    .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+    <!-- ============ LOGIN SCREEN ============ -->
+    <div id="login-screen">
+        <div class="login-card">
+            <div class="login-logo">Notification<span>Hub</span></div>
+            <div class="login-subtitle">Cross-device notification center</div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" placeholder="admin" autocomplete="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter password" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Sign In</button>
+                <div id="login-error" class="login-error hidden"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============ DASHBOARD ============ -->
+    <div id="dashboard" class="hidden">
+
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-brand">
+                <div class="topbar-brand-icon">N</div>
+                NotificationHub
+            </div>
+            <div class="topbar-center">
+                <button class="tab-btn active" data-view="all">All</button>
+                <button class="tab-btn" data-view="sms">SMS Codes</button>
+                <button class="tab-btn" data-view="devices">Devices</button>
+            </div>
+            <div class="topbar-actions">
+                <span id="ws-indicator" class="ws-dot disconnected" title="Disconnected"></span>
+                <button id="theme-toggle" class="icon-btn" title="Toggle theme">&#9728;&#65039;</button>
+                <button id="pairing-btn" class="pair-btn">&#xFF0B;&#65039; Pair Device</button>
+                <button id="logout-btn" class="icon-btn" title="Logout">&#10140;</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="stat-card"><div class="stat-value" id="stat-total">0</div><div class="stat-label">Notifications</div></div>
+                <div class="stat-card"><div class="stat-value" id="stat-sms">0</div><div class="stat-label">SMS Codes</div></div>
+                <div class="stat-card"><div class="stat-value" id="stat-devices">0</div><div class="stat-label">Devices</div></div>
+            </div>
+
+            <!-- SMS Banner -->
+            <div id="sms-banner" class="sms-banner">Viewing SMS verification codes only.</div>
+
+            <!-- Notification List -->
+            <div id="notif-container" class="notif-list"></div>
+
+            <!-- Load More -->
+            <div class="load-more-wrap">
+                <button id="load-more-btn" class="btn-load-more">Load More</button>
+            </div>
+
+            <!-- Device Section -->
+            <div id="devices-section">
+                <div id="device-list" class="device-grid"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ============ PAIRING MODAL ============ -->
+    <div id="pairing-overlay" class="overlay hidden">
+        <div class="modal">
+            <h3>&#x1F517; Pair a New Device</h3>
+            <p class="pairing-hint">Open the NotificationHub app on your phone and scan this QR code.</p>
+            <div class="pairing-qr" id="pairing-qr-img"></div>
+            <div class="pairing-code" id="pairing-code-display"></div>
+            <div class="pairing-timer" id="pairing-timer"></div>
+            <button id="pairing-close" class="close-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- ============ CODE TOASTS ============ -->
+    <div id="code-toast-container"></div>
+
+</div>
+
+<script src="/static/js/utils.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/websocket.js"></script>
+<script src="/static/js/app.js"></script>
+
+</body>
+</html>

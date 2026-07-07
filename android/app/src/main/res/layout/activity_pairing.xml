@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pair Device"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan the QR code from the web dashboard"
+        android:textSize="14sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:layout_marginBottom="32dp" />
+
+    <TextView
+        android:id="@+id/pairingStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Waiting for camera..."
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/pairingCode"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Or enter code manually"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@android:drawable/editbox_background" />
+
+    <Button
+        android:id="@+id/btnManualPair"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Manual Pair"
+        android:layout_marginTop="16dp"
+        style="@style/Widget.Material3.Button.TonalButton" />
+
+</LinearLayout>
