@@ -14,7 +14,7 @@
         android:allowBackup="true"
         android:label="NotificationHub"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
+        android:theme="@style/Theme.NotificationHub"
         android:usesCleartextTraffic="false">
 
         <activity
@@ -30,7 +30,7 @@
         <activity
             android:name=".ui.PairingActivity"
             android:exported="false"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
+            android:theme="@style/Theme.NotificationHub" />
 
         <service
             android:name=".NotificationListener"

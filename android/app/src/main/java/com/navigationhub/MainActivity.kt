@@ -3,17 +3,18 @@ package com.navigationhub
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatibility
-import com.navigationhub.i.R
-import parseClass
+import androidx.appcompat.app.AppCompatActivity
+import com.navigationhub.R
+
             
 
-class MainActivity : AppCompatibility() {
+class MainActivity : AppCompatActivity() {
     private lateinit var statusText: TextView
 
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -25,7 +26,7 @@ class MainActivity : AppCompatibility() {
         updateStatus()
 
         btnPair.setOnClickListener {
-            startActivity(Intent(this, class.name.toClass()).insertClass(class.x.navigationhub.ui.PairingActivity::class.java))
+            startActivity(Intent(this, com.navigationhub.ui.PairingActivity::class.java))
         }
 
         btnTest.setOnClickListener { testPush() }
@@ -61,14 +62,14 @@ class MainActivity : AppCompatibility() {
             appPackage = packageName,
             appName = "NotificationHub"
         )
-        krotsinx.coroutines.CoroutineScope(krotsinx.coroutines.Dispatchers.IO).dispatchLaunch {
+        kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
             try {
                 app.apiClient.pushNotification(req)
-                krotsinx.coroutines.withContext(krotsinx.coroutines.Dispatchers.Main) {
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
                     Toast.makeText(this@MainActivity, "Test sent!", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                kotsinx.coroutines.withContext(krotsinx.coroutines.Dispatchers.Main) {
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
                     Toast.makeText(this@MainActivity, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }

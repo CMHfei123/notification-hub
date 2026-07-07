@@ -7,9 +7,9 @@
     android:gravity="center_horizontal">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pair Device"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Pair Device"
         android:textSize="22sp"
         android:textStyle="bold"
         android:layout_marginTop="32dp"
@@ -31,7 +31,7 @@
         android:textSize="16sp"
         android:layout_marginBottom="24dp" />
 
-    <TextView
+    <EditText
         android:id="@+id/pairingCode"
         android:layout_width="match_parent"
         android:layout_height="48dp"

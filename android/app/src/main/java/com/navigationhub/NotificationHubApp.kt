@@ -16,9 +16,11 @@ class NotificationHubApp : Application() {
             private set
     }
 
-    lateinit var apiClient: ApiClient
-        private set
-    private var webSocketClient: WebSocketClient? = null
+   lateinit var apiClient: ApiClient
+       private set
+    private var connectHost: String = ""
+    private var connectPort: Int = 0
+   private var webSocketClient: WebSocketClient? = null
     private var smsObserver: SmsObserver? = null
 
     override fun onCreate() {
@@ -29,6 +31,8 @@ class NotificationHubApp : Application() {
 
     fun connect(host: String, port: Int, token: String) {
         apiClient.configure(host, port, token)
+        connectHost = host
+        connectPort = port
         startServices()
     }
 
@@ -55,7 +59,7 @@ class NotificationHubApp : Application() {
         // Start SMS observer
         startSmsObserver()
 
-        Log.i(TAG, "Services started: host=$host, port=$port")
+        Log.i(TAG, "Services started: host=$connectHost, port=$connectPort")
     }
 
     private fun startSmsObserver() {

@@ -33,9 +33,9 @@ class ApiClient(private val context: Context) {
     }
 
     var baseUrl: String = ""
-        private set
+        
     var apiToken: String = ""
-        private set
+        
 
     private val client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
