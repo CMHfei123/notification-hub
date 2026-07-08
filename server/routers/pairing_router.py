@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.get("/qrcode", response_model=PairingCodeResponse)
-async def get_pairing_qrcode():
+async def get_pairing_qrcode(_=Depends(get_current_web_user)):
     """Generate a new pairing QR code (web page initiates pairing)."""
     pairing_code, qrcode_base64, expires_at = pairing_service.generate_pairing_code()
     logger.info(f"Pairing QR code requested: {pairing_code}")

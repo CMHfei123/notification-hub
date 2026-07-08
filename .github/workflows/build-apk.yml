@@ -1,7 +1,7 @@
-name: Build Android APK
+﻿name: Build Android APK
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, fix-sync ]
   workflow_dispatch:
 
 jobs:
@@ -22,12 +22,24 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.5
 
       - name: Generate Gradle Wrapper
-        run: gradle wrapper --gradle-version 8.5
+        run: gradle wrapper
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        run: |
+          ./gradlew assembleDebug 2>&1 | tee build.log || true
+          python3 -c "
+import re, sys
+with open('build.log', errors='replace') as f:
+    for line in f:
+        line = line.strip()
+        if line.startswith('e: '):
+            m = re.match(r'^e: (.+?): \((\d+), (\d+)\): (.+)', line)
+            if m: print(f'::error file={m.group(1)},line={m.group(2)},col={m.group(3)}::{m.group(4)}')
+            else: print(f'::error::{line}')
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

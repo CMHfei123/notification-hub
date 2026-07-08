@@ -1,5 +1,7 @@
+import hashlib
 import logging
 import re
+import time
 import uuid
 from datetime import datetime, timezone
 from typing import Optional
@@ -9,12 +11,19 @@ from sqlalchemy import select, func, delete as sa_delete, desc
 from database import Device, Notification, async_session_factory
 
 logger = logging.getLogger("notification-hub.notification")
+_VERIFICATION_CODE_PATTERN = re.compile(r"(?<!\d)(\d{4,8})(?!\d)")
+_dedup_cache: dict = {}
+DEDUP_WINDOW_SECONDS = 30
+MAX_DEDUP_CACHE_SIZE = 500
+
+def _compute_notification_hash(device_id: str, title: str, content: str, app_package: str) -> str:
+    return hashlib.sha256(f"{device_id}|{app_package}|{title}|{content}".encode()).hexdigest()
 
 
 # Regex for Chinese SMS verification codes (4-8 digit codes)
 VERIFICATION_CODE_PATTERN = re.compile(r"(?<!\d)(\d{4,8})(?!\d)")
-# Specific patterns: "验证码", "验证码是", "动态码"
-SPECIFIC_PATTERN = re.compile(r"(验证码|动态码|校验码|一次性密码)[：:是为\s]*(\d{4,8})")
+# Specific patterns: "楠岃瘉鐮?, "楠岃瘉鐮佹槸", "鍔ㄦ€佺爜"
+SPECIFIC_PATTERN = re.compile(r"(楠岃瘉鐮亅鍔ㄦ€佺爜|鏍￠獙鐮亅涓€娆℃€у瘑鐮?[锛?鏄负\s]*(\d{4,8})")
 
 
 def extract_verification_code(text: str) -> str:
@@ -46,7 +55,7 @@ async def store_notification(
 ) -> dict:
     """Store a notification in the database and return the stored record."""
     # Auto-extract verification code if not provided
-    if not verification_code and (is_sms or "验证码" in content or "code" in content.lower()):
+    if not verification_code and (is_sms or "楠岃瘉鐮? in content or "code" in content.lower()):
         extracted = extract_verification_code(content)
         if not extracted:
             extracted = extract_verification_code(title)

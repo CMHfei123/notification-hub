@@ -1,3 +1,4 @@
+import asyncio
 import io
 import json
 import logging
@@ -14,7 +15,8 @@ class PairingService:
     """Manages device pairing codes and verification."""
 
     def __init__(self):
-        self._pending_codes: dict[str, dict] = {}  # pairing_code -> {expires_at, device_id?, paired}
+        self._pending_codes: dict[str, dict] = {}
+        self._cleanup_task: asyncio.Task | None = None  # pairing_code -> {expires_at, device_id?, paired}
 
     def generate_pairing_code(self) -> tuple[str, str, datetime]:
         """
@@ -84,6 +86,28 @@ class PairingService:
         if expired:
             logger.debug(f"Removed {len(expired)} expired pairing codes")
 
+
+
+    async def _cleanup_loop(self):
+        while True:
+            try:
+                await asyncio.sleep(60)
+                self.remove_expired_codes()
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                logger.warning(f"Pairing cleanup error: {e}")
+
+    def start_cleanup(self) -> None:
+        if self._cleanup_task is None or self._cleanup_task.done():
+            self._cleanup_task = asyncio.create_task(self._cleanup_loop())
+
+    async def stop_cleanup(self) -> None:
+        if self._cleanup_task and not self._cleanup_task.done():
+            self._cleanup_task.cancel()
+            try: await self._cleanup_task
+            except asyncio.CancelledError: pass
+            self._cleanup_task = None
 
 pairing_service = PairingService()
 

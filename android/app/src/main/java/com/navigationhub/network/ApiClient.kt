@@ -84,8 +84,7 @@ class ApiClient(private val context: Context) {
             put("app_name", request.appName); put("notification_type", request.notificationType)
             put("is_sms", request.isSms); put("verification_code", request.verificationCode); put("category", request.category)
         }
-        try { execute(buildRequest("/api/notifications/push", json.toString())) }
-        catch (e: Exception) { throw e }
+        execute(buildRequest("/api/notifications/push", json.toString()))
     }
 
     suspend fun fetchNotifications(page: Int = 1, pageSize: Int = 50): List<Map<String, Any>> {
@@ -116,10 +115,10 @@ class ApiClient(private val context: Context) {
         }
     }
 
-    fun createWebSocket(path: String): WebSocket {
+    fun createWebSocket(path: String, listener: WebSocketListener = object : WebSocketListener() {}): WebSocket {
         val url = "$baseUrl$path".replace("https://", "wss://")
         val request = Request.Builder().url(url).addHeader("Authorization", "Bearer $apiToken").build()
-        return client.newWebSocket(request, object : WebSocketListener() {})
+        return client.newWebSocket(request, listener)
     }
 
     fun close() {

@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class NotificationListener : NotificationListenerService() {
     companion object {
         private const val TAG = "NotifListener"
-        private val smsApps = setOf("com.android.mms", "com.android.messaging", "com.google.android.apps.messaging", "com.miui.mms", "com.miui.smsextra")
+        private val smsApps = setOf("com.android.mms", "com.android.messaging", "com.google.android.apps.messaging", "com.miui.mms", "com.miui.smsextra", "com.xiaomi.smsextra", "com.android.phone", "com.huawei.phone", "com.huawei.message", "com.samsung.android.messaging", "com.bbk.mms")
     }
 
     private val scope = CoroutineScope(Dispatchers.IO)
@@ -47,12 +47,12 @@ class NotificationListener : NotificationListenerService() {
 
         scope.launch {
             try {
-                val app = application as NotificationHubApp
-                app.apiClient.pushNotification(request)
+                val app = application as? NotificationHubApp ?: return
+                app.tryPushNotification(request)
             } catch (e: Exception) {
                 Log.w(TAG, "Push failed, queuing: " + e.message)
                 try {
-                    val app = application as NotificationHubApp
+                    val app = application as? NotificationHubApp ?: return
                     app.enqueueNotification(request)
                 } catch (e2: Exception) {
                     Log.w(TAG, "Queue also failed: " + e2.message)

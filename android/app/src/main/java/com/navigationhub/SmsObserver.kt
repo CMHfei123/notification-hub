@@ -50,7 +50,7 @@ class SmsObserver(context: Context, handler: Handler) : ContentObserver(handler)
                     scope.launch {
                         try {
                             val app = appContext as NotificationHubApp
-                            app.apiClient.pushNotification(request)
+                            app.tryPushNotification(request)
                             Log.d(TAG, "SMS pushed: $address" + if (verificationCode.isNotEmpty()) " [CODE]" else "")
                         } catch (e: Exception) {
                             Log.w(TAG, "SMS push failed, queuing: " + e.message)
