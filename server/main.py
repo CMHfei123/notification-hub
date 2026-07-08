@@ -61,8 +61,11 @@ async def lifespan(app):
         app.state.web_password_hash = WEB_PASSWORD_HASH
         app.state.web_username = WEB_USERNAME
     from services.websocket_manager import ws_manager
+    from services.pairing_service import pairing_service
     app.state.ws_manager = ws_manager
+    pairing_service.start_cleanup()
     yield
+    await pairing_service.stop_cleanup()
     await ws_manager.close_all()
     await close_db()
 

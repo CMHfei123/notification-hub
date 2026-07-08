@@ -53,7 +53,7 @@ class WebSocketClient(
         scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
         try {
-            webSocket = apiClient.createWebSocket("/ws/notifications?token=${apiClient.apiToken}")
+            webSocket = apiClient.createWebSocket("/ws/notifications?token=${apiClient.apiToken}", listener)
         } catch (e: Exception) {
             Log.e(TAG, "WebSocket create failed: ${e.message}")
             scheduleReconnect()
