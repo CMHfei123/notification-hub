@@ -44,7 +44,13 @@
         <service
             android:name=".SyncService"
             android:exported="false"
+
             android:foregroundServiceType="dataSync" />
+
+        <activity
+            android:name=".ui.NotificationsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NotificationHub" />
 
     </application>
 

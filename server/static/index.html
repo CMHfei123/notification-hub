@@ -17,17 +17,17 @@
     <div id="login-screen">
         <div class="login-card">
             <div class="login-logo">Notification<span>Hub</span></div>
-            <div class="login-subtitle">Cross-device notification center</div>
+            <div class="login-subtitle">跨设备通知中心</div>
             <form id="login-form">
                 <div class="form-group">
-                    <label for="login-username">Username</label>
+                    <label for="login-username">用户名</label>
                     <input type="text" id="login-username" placeholder="admin" autocomplete="username" required>
                 </div>
                 <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" placeholder="Enter password" autocomplete="current-password" required>
+                    <label for="login-password">密码</label>
+                    <input type="password" id="login-password" placeholder="输入密码" autocomplete="current-password" required>
                 </div>
-                <button type="submit" class="btn-primary">Sign In</button>
+                <button type="submit" class="btn-primary">登录</button>
                 <div id="login-error" class="login-error hidden"></div>
             </form>
         </div>
@@ -43,15 +43,15 @@
                 NotificationHub
             </div>
             <div class="topbar-center">
-                <button class="tab-btn active" data-view="all">All</button>
-                <button class="tab-btn" data-view="sms">SMS Codes</button>
-                <button class="tab-btn" data-view="devices">Devices</button>
+                <button class="tab-btn active" data-view="all">全部</button>
+                <button class="tab-btn" data-view="sms">短信验证码</button>
+                <button class="tab-btn" data-view="devices">设备</button>
             </div>
             <div class="topbar-actions">
                 <span id="ws-indicator" class="ws-dot disconnected" title="Disconnected"></span>
                 <button id="theme-toggle" class="icon-btn" title="Toggle theme">&#9728;&#65039;</button>
-                <button id="pairing-btn" class="pair-btn">&#xFF0B;&#65039; Pair Device</button>
-                <button id="logout-btn" class="icon-btn" title="Logout">&#10140;</button>
+                <button id="pairing-btn" class="pair-btn">&#xFF0B;&#65039; 配对设备</button>
+                <button id="logout-btn" class="icon-btn" title="退出登录">&#10140;</button>
             </div>
         </header>
 
@@ -59,13 +59,13 @@
         <main class="main-content">
             <!-- Stats -->
             <div class="stats-row">
-                <div class="stat-card"><div class="stat-value" id="stat-total">0</div><div class="stat-label">Notifications</div></div>
-                <div class="stat-card"><div class="stat-value" id="stat-sms">0</div><div class="stat-label">SMS Codes</div></div>
-                <div class="stat-card"><div class="stat-value" id="stat-devices">0</div><div class="stat-label">Devices</div></div>
+                <div class="stat-card"><div class="stat-value" id="stat-total">0</div><div class="stat-label">通知</div></div>
+                <div class="stat-card"><div class="stat-value" id="stat-sms">0</div><div class="stat-label">短信验证码</div></div>
+                <div class="stat-card"><div class="stat-value" id="stat-devices">0</div><div class="stat-label">设备</div></div>
             </div>
 
             <!-- SMS Banner -->
-            <div id="sms-banner" class="sms-banner">Viewing SMS verification codes only.</div>
+            <div id="sms-banner" class="sms-banner">Viewing SMS 验证码s only.</div>
 
             <!-- Notification List -->
             <div id="notif-container" class="notif-list"></div>
@@ -90,7 +90,7 @@
             <div class="pairing-qr" id="pairing-qr-img"></div>
             <div class="pairing-code" id="pairing-code-display"></div>
             <div class="pairing-timer" id="pairing-timer"></div>
-            <button id="pairing-close" class="close-btn">Close</button>
+            <button id="pairing-close" class="close-btn">关闭</button>
         </div>
     </div>
 

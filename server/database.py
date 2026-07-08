@@ -19,6 +19,7 @@ class Device(Base):
     __tablename__ = "devices"
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    device_uid: Mapped[str] = mapped_column(String(128), nullable=False, default="", index=True)
     name: Mapped[str] = mapped_column(String(128), nullable=False)
     device_type: Mapped[str] = mapped_column(String(32), nullable=False, default="android")
     platform: Mapped[str] = mapped_column(String(32), nullable=False, default="android")

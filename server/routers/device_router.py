@@ -1,7 +1,5 @@
 import logging
-from datetime import datetime, timezone
-
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 
 from auth import get_current_web_user

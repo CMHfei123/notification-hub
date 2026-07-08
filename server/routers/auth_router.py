@@ -4,6 +4,7 @@ from sqlalchemy import select
 from auth import create_device_token, create_web_token, verify_password
 from database import Device, async_session_factory
 from schemas import DeviceRegisterRequest, TokenResponse, WebLoginRequest, DeviceLoginRequest
+from datetime import datetime, timezone
 
 logger = logging.getLogger('notification-hub.auth')
 router = APIRouter()
@@ -13,13 +14,26 @@ async def register_device(req: DeviceRegisterRequest, request: Request):
     from main import app
     secret = app.state.jwt_secret
     async with async_session_factory() as session:
-        device = Device(name=req.name, device_type=req.device_type, platform=req.platform, platform_version=req.platform_version)
-        session.add(device)
-        await session.flush()
+        existing = None
+        if req.device_uid:
+            result = await session.execute(select(Device).where(Device.device_uid == req.device_uid))
+            existing = result.scalar_one_or_none()
+        if existing:
+            device = existing
+            device.name = req.name
+            device.device_type = req.device_type
+            device.platform = req.platform
+            device.platform_version = req.platform_version
+            device.last_seen = datetime.now(timezone.utc)
+            logger.info(f'Device reconnected: {device.id} ({req.device_uid})')
+        else:
+            device = Device(name=req.name, device_uid=req.device_uid or "", device_type=req.device_type, platform=req.platform, platform_version=req.platform_version)
+            session.add(device)
+            await session.flush()
+            logger.info(f'Device registered: {device.id} ({req.device_uid})')
         token = create_device_token(device.id, device.name, secret)
         device.api_token = token
         await session.commit()
-    logger.info(f'Device registered: {device.id}')
     return TokenResponse(access_token=token, device_id=device.id)
 
 @router.post('/login', response_model=TokenResponse)

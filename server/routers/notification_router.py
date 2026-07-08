@@ -3,7 +3,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 
-from auth import get_device_id_from_token, get_current_web_user
+from auth import get_current_user
 from schemas import (
     NotificationPushRequest, NotificationResponse,
     NotificationListResponse, NotificationDeleteResponse,
@@ -58,7 +58,7 @@ async def list_notifications(
     is_sms: Optional[bool] = Query(None),
     notification_type: Optional[str] = Query(None),
     search: Optional[str] = Query(None),
-    _=Depends(get_current_web_user),
+    _=Depends(get_current_user),
 ):
     """List notifications with optional filters."""
     items, total = await get_notifications(
@@ -81,7 +81,7 @@ async def list_notifications(
 async def list_sms(
     page: int = Query(1, ge=1),
     page_size: int = Query(50, ge=1, le=200),
-    _=Depends(get_current_web_user),
+    _=Depends(get_current_user),
 ):
     """Get SMS notifications (verification codes)."""
     items, total = await get_notifications(
@@ -100,7 +100,7 @@ async def list_sms(
 @router.delete("/{notification_id}", response_model=NotificationDeleteResponse)
 async def remove_notification(
     notification_id: str,
-    _=Depends(get_current_web_user),
+    _=Depends(get_current_user),
 ):
     """Delete a notification."""
     success = await delete_notification(notification_id)

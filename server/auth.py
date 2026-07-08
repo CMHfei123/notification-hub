@@ -41,6 +41,16 @@ def get_device_id_from_token(secret, credentials=None):
         raise HTTPException(status_code=403, detail='Invalid token type')
     return payload['sub']
 
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    from main import app
+    secret = app.state.jwt_secret
+    if credentials is None:
+        raise HTTPException(status_code=401, detail='Missing authorization')
+    payload = verify_token(credentials.credentials, secret)
+    if payload.get('type') not in ('web', 'device'):
+        raise HTTPException(status_code=403, detail='Invalid token type')
+    return payload['sub']
+
 async def get_current_web_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     from main import app
     secret = app.state.jwt_secret

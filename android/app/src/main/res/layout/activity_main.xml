@@ -6,53 +6,33 @@
     android:padding="24dp"
     android:gravity="center_horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NotificationHub"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="8dp" />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="NotificationHub" android:textSize="28sp" android:textStyle="bold"
+        android:layout_marginTop="48dp" android:layout_marginBottom="8dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cross-Device Notification Sync"
-        android:textSize="14sp"
-        android:textColor="?android:attr/textColorSecondary"
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="跨设备通知同步"
+        android:textSize="14sp" android:textColor="?android:attr/textColorSecondary"
         android:layout_marginBottom="48dp" />
 
-    <TextView
-        android:id="@+id/statusText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Not connected"
-        android:textSize="16sp"
-        android:layout_marginBottom="32dp" />
+    <TextView android:id="@+id/statusText" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="未连接"
+        android:textSize="16sp" android:layout_marginBottom="32dp" />
 
-    <Button
-        android:id="@+id/btnPair"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Pair with Server"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp" />
+    <Button android:id="@+id/btnPair" android:layout_width="match_parent"
+        android:layout_height="56dp" android:text="配对服务器"
+        android:textSize="16sp" android:layout_marginBottom="16dp" />
 
-    <Button
-        android:id="@+id/btnTest"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Send Test Notification"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp" />
+    <Button android:id="@+id/btnTest" android:layout_width="match_parent"
+        android:layout_height="56dp" android:text="发送测试通知"
+        android:textSize="16sp" android:layout_marginBottom="16dp" />
 
-    <Button
-        android:id="@+id/btnSettings"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Notification Access Settings"
-        android:textSize="16sp"
-        style="@style/Widget.Material3.Button.TonalButton" />
+    <Button android:id="@+id/btnViewNotifications" android:layout_width="match_parent"
+        android:layout_height="56dp" android:text="所有设备通知"
+        android:textSize="16sp" android:layout_marginBottom="16dp" />
+
+    <Button android:id="@+id/btnSettings" android:layout_width="match_parent"
+        android:layout_height="56dp" android:text="通知监听权限"
+        android:textSize="16sp" style="@style/Widget.Material3.Button.TonalButton" />
 
 </LinearLayout>

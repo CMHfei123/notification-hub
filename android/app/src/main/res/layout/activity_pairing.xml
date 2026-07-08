@@ -7,9 +7,9 @@
     android:gravity="center_horizontal">
 
     <TextView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Pair Device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="配对设备"
         android:textSize="22sp"
         android:textStyle="bold"
         android:layout_marginTop="32dp"
@@ -18,24 +18,68 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scan the QR code from the web dashboard"
+        android:text="在 Web 仪表板生成配对码后，在此输入服务器地址和配对码"
         android:textSize="14sp"
         android:textColor="?android:attr/textColorSecondary"
-        android:layout_marginBottom="32dp" />
+        android:layout_marginBottom="24dp" />
 
     <TextView
-        android:id="@+id/pairingStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Waiting for camera..."
-        android:textSize="16sp"
-        android:layout_marginBottom="24dp" />
+        android:text="服务器地址"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp"
+        android:layout_gravity="left" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/serverHost"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:hint="192.168.1.xxx"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="@android:drawable/editbox_background" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" : "
+            android:gravity="center"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/serverPort"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="8856"
+            android:text="8856"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="@android:drawable/editbox_background" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="配对码"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"
+        android:layout_gravity="left" />
 
     <EditText
         android:id="@+id/pairingCode"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:hint="Or enter code manually"
+        android:hint="输入 8 位配对码"
         android:textSize="18sp"
         android:gravity="center"
         android:background="@android:drawable/editbox_background" />
@@ -44,8 +88,23 @@
         android:id="@+id/btnManualPair"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="Manual Pair"
+        android:text="手动配对"
         android:layout_marginTop="16dp"
         style="@style/Widget.Material3.Button.TonalButton" />
+
+    <Button
+        android:id="@+id/btnScanQr"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="扫描二维码"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:id="@+id/pairingStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16sp"
+        android:layout_marginTop="24dp" />
 
 </LinearLayout>

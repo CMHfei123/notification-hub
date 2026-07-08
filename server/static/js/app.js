@@ -41,7 +41,7 @@ const App = {
                 errEl.textContent = err.message;
                 errEl.classList.remove('hidden');
                 btn.disabled = false;
-                btn.textContent = 'Sign In';
+                btn.textContent = '登录';
             }
         };
     },

@@ -56,7 +56,7 @@ class WebSocketManager:
             logger.info(f"Web WebSocket disconnected (remaining: {len(self._web_connections)})")
 
     async def broadcast_notification(self, notification: dict):
-        """Broadcast a notification to all connected web clients."""
+        """Broadcast a notification to all connected web and device clients."""
         message = json.dumps({
             "type": "notification",
             "data": {
@@ -82,7 +82,18 @@ class WebSocketManager:
                 disconnected.append(ws)
         for ws in disconnected:
             self.disconnect(ws)
-        logger.debug(f"Broadcasted notification to {len(self._web_connections)} web clients")
+        # Also broadcast to all connected device clients so phones can see each other's notifications
+        dev_disconnected = []
+        for dev_id, dev_conns in self._connections.items():
+            for ws in dev_conns:
+                try:
+                    await ws.send_text(message)
+                except Exception:
+                    dev_disconnected.append((dev_id, ws))
+        for dev_id, ws in dev_disconnected:
+            if ws in self._connections.get(dev_id, []):
+                self._connections[dev_id].remove(ws)
+        logger.debug(f"Broadcasted to {len(self._web_connections)} web + {sum(len(c) for c in self._connections.values())} device clients")
 
     async def send_device_event(self, event_type: str, data: dict):
         """Send an event (e.g., device connected/disconnected) to web clients."""

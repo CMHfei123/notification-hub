@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 
 class DeviceRegisterRequest(BaseModel):
     name: str = Field(..., min_length=1, max_length=128, description="Device display name")
+    device_uid: str = Field(default="", description="Persistent device unique identifier")
     device_type: str = Field(default="android", pattern="^(android|ios|harmonyos|web)$")
     platform: str = Field(default="android")
     platform_version: str = Field(default="")
