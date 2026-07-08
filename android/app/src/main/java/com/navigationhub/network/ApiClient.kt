@@ -116,10 +116,10 @@ class ApiClient(private val context: Context) {
         }
     }
 
-    fun createWebSocket(path: String): WebSocket {
+    fun createWebSocket(path: String, listener: WebSocketListener = object : WebSocketListener() {}): WebSocket {
         val url = "$baseUrl$path".replace("https://", "wss://")
         val request = Request.Builder().url(url).addHeader("Authorization", "Bearer $apiToken").build()
-        return client.newWebSocket(request, object : WebSocketListener() {})
+        return client.newWebSocket(request, listener)
     }
 
     fun close() {
